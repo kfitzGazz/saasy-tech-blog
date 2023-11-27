@@ -2,7 +2,8 @@ const sequelize = require('../config/connection');
 const { User, Project } = require('../models');
 
 const userData = require('./userData.json');
-const projectData = require('./projectData.json');
+const projectData = require('./postData.json');
+const { post } = require('../controllers/homeRoutes');
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
@@ -12,9 +13,9 @@ const seedDatabase = async () => {
     returning: true,
   });
 
-  for (const project of projectData) {
-    await Project.create({
-      ...project,
+  for (const project of postData) {
+    await post.create({
+      ...post,
       user_id: users[Math.floor(Math.random() * users.length)].id,
     });
   }
